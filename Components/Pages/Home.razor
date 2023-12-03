@@ -1,0 +1,40 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject IGenerator Generator
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your image generator.
+
+@if(string.IsNullOrEmpty(imageUrl))
+{
+    <p><em>Loading...</em></p>   
+
+}
+else
+{
+    <img src="@imageUrl" class="card-img-top" alt="..." style="width:50%; position:center"/>   
+}
+<div class="col ms-5">
+    <InputText @bind-Value="@inputText">
+
+        </InputText>
+    <button type="button" class="btn btn-primary" @onclick="(() => GetImage(inputText))">
+        Generate
+    </button>
+
+</div>
+
+@code{
+    string imageUrl = "";
+    string inputText = "";
+
+    async Task GetImage(string inputText)
+    {
+        Console.WriteLine("test");
+        imageUrl = await Generator.GetUrl(inputText);
+    }
+
+}
